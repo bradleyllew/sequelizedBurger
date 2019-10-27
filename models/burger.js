@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Burger = sequelize.define('Burger', {
     burger_name: DataTypes.STRING,
     devoured: DataTypes.BOOLEAN 
-  }, {});
+  });
   
   // joining burger model with customer model
   Burger.associate = function(models) {

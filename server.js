@@ -12,8 +12,8 @@ var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 var db = require("./models");
-// const { Burger } = require('./models'); ------------------????????
-// const { Customer } = require('./models'); -----------------???????
+// const { Burger } = require('./models'); //------------------????????
+// const { Customer } = require('./models'); //-----------------???????
 
 // Sets up the Express app to handle data parsing
 // =============================================================
@@ -32,8 +32,8 @@ app.use(express.static("public"));
 
 // Routes (import routes and give the server access to them.)
 // =============================================================
-var routes = require("./routes/api-routes.js/");
-app.use(routes);
+var routes = require("./routes/api-routes")(app);
+// app.use(routes);
 
 
 
@@ -42,16 +42,17 @@ app.use(routes);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-// db.sequelize.sync({ force: true }).then(function() {
-//   app.listen(PORT, function() {
-//     console.log("App listening on PORT " + PORT);
-//   });
-// });
-
-//Add the Sequelize sync instruction to your Node app’s entry point------------------------------
-models.sequelize.sync({force: true}).then(function() {
-    server.listen(port);
-    server.on('error', onError);
-    server.on('listening', onListening);
+db.sequelize.sync({ force: true }).then(function() {
+  app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
+});
+
+//Add the Sequelize sync instruction to your Node app’s entry point------------------------------
+// db.sequelize.sync({force: true}).then(function() {
+//     app.listen(PORT, () => {
+//       console.log("App listening on PORT " + PORT);
+//     });
+//     // app.on('error', onError);
+//     app.on('listening', onListening);
+//   });
